@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "
+
+Fenics Build: `fenics-version`
+Custom port: $Jport
+
+Copy demo files;
+
+  cp -R /usr/fenics $HOME/fenics
+
+Start Jupyter Lab;
+
+  jupyter lab --port $Jport
+
+Start python;
+
+  python3
+
+Explore the demos;
+
+  cd ~/fenics/demo/python/documented/poisson
+  python3 demo_poisson.py
+
+For any issues, please email mustafa.arif@qatar.tamu.edu
+"

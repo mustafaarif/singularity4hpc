@@ -1,0 +1,47 @@
+Bootstrap: docker
+From: quay.io/fenicsproject/stable:latest
+
+%environment
+    export LC_ALL=C
+    export FENICS_HOME=$HOME/fenics
+    export FENICS_PREFIX=$HOME/fenics/local
+    export FENICS_PYTHON=python3
+    export FENICS_SRC_DIR=$HOME/fenics/local/src
+    export PYTHONPATH=$HOME/fenics/py-packages:$PYTHONPATH
+    export DISPLAY="`echo $SSH_CONNECTION | awk '{print $1;}'`:0.0"
+
+%files
+    /root/fenicsbuild/fenics-motd.sh /.singularity.d/env/99-motd.sh
+    /root/fenicsbuild/fenics-help /usr/local/bin/fenics-help
+
+%runscript
+    exec "$@"
+
+%labels
+    Author mustafa.arif@qatar.tamu.edu
+    Version v0.0.1
+    FenicsVersion 2019.1.0
+
+%post
+    apt-get -y install rsync vim
+    mkdir -p /home/fenics/py-packages
+    rsync -av --exclude=".*" /home/fenics /usr/
+    rm /usr/fenics/WELCOME
+    rm /usr/fenics/fenics.env.conf
+    deluser --remove-home fenics
+    touch /etc/pythonstart
+    sed -i 's/Singularity\>/\\u\@\\h-fenics\:\\w\\$/g' /.singularity.d/env/99-base.sh
+    chmod +x /usr/local/bin/fenics-help
+    pip install --upgrade pip
+    jupyter lab clean
+    apt-get -y install nodejs npm
+    pip install --upgrade jupyterlab
+    pip install ipympl
+    pip install widgetsnbextension
+    pip install ipywidgets
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1
+    jupyter labextension install jupyter-matplotlib
+    jupyter lab build
+    jupyter nbextension enable --py widgetsnbextension
+    jupyter labextension enable widgetslabextension
+    jupyter labextension enable jupyter-matplotlib

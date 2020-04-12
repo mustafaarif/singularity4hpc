@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: ubuntu:disco
+
+%files
+      /tmp/NetPIPE-5.1.4/NPmpi /opt
+
+%environment
+      MPI_DIR=/opt/mpi
+      export MPI_DIR
+      export SINGULARITY_MPI_DIR=$MPI_DIR
+      export SINGULARITYENV_APPEND_PATH=$MPI_DIR/bin
+      export SINGULARITYENV_APPEND_LD_LIBRARY_PATH=$MPI_DIR/lib
+
+%post
+      apt-get update && apt-get install -y wget git bash gcc gfortran g++ make file
+      mkdir -p /opt/mpi
+      apt-get clean

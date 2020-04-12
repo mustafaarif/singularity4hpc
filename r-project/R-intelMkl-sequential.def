@@ -3,6 +3,12 @@ image: ubuntu:latest
 
 %environment
    export DEBIAN_FRONTEND=noninteractive
+   export LD_LIBRARY_PATH=/opt/intel/compilers_and_libraries_2020.1.217/linux/tbb/lib/intel64_lin/gcc4.7:/opt/intel/compilers_and_libraries_2020.1.217/linux/compiler/lib/intel64_lin:/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/lib/intel64_lin:$LD_LIBRARY_PATH
+   export CPATH=/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/include:$CPATH
+   export NLSPATH=/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/lib/intel64_lin/locale/%l_%t/%N:$NLSPATH
+   export LIBRARY_PATH=/opt/intel/compilers_and_libraries_2020.1.217/linux/tbb/lib/intel64_lin/gcc4.7:/opt/intel/compilers_and_libraries_2020.1.217/linux/compiler/lib/intel64_lin:/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/lib/intel64_lin:$LIBRARY_PATH
+   export MKLROOT=/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl
+   export PKG_CONFIG_PATH=/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/bin/pkgconfig:$PKG_CONFIG_PATH
 
 %post
 
@@ -26,7 +32,6 @@ image: ubuntu:latest
    tar -xvzf R-3.6.3.tar.gz
    cd R-3.6.3
    source /opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/bin/mklvars.sh intel64
-   #MKL="-Wl,--no-as-needed -lmkl_gf_lp64 -Wl,--start-group -lmkl_gnu_thread  -lmkl_core  -Wl,--end-group -ldl -lpthread -lm"
    MKL="-L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl"
    ./configure --with-blas="$MKL" --with-lapack --enable-R-shlib --with-x=no
    make -j 2

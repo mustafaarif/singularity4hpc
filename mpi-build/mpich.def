@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+    echo "Installing required packages..."
+    apt-get update && apt-get install -y wget git bash gcc gfortran g++ make
+
+    # Information about the version of MPICH to use
+    export MPICH_VERSION=3.3
+    export MPICH_URL="http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz"
+
+    echo "Installing MPICH..."
+    mkdir -p /tmp/mpich
+    # Download
+    cd /tmp/mpich && wget -O mpich-$MPICH_VERSION.tar.gz $MPICH_URL && tar xzf mpich-$MPICH_VERSION.tar.gz
+    # Compile and install
+    cd /tmp/mpich/mpich-$MPICH_VERSION && ./configure && make install

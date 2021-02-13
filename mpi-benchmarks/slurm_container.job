@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH -J mpi_test
+#SBATCH -p l_long
+#SBATCH --qos ll
+##SBATCH --reservation=training2020
+#SBATCH --time=00:05:00
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=24
+#SBATCH --hint=nomultithread
+#SBATCH --output=container-run-%j.out
+#SBATCH --error=container-run-%j.err
+
+# Compile the source code
+singularity exec ~/opt/mpich/33/mpich33.sif mpicc -o container_compile.o mpi_bandwidth.c
+
+#Now launch computation with 48 processes
+srun --mpi=pmi2 -n 48 singularity exec ~/opt/mpich/33/mpich33.sif ./container_compile.o
+

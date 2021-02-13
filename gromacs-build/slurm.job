@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH -J gromacs_test
+#SBATCH -p l_long
+#SBATCH --qos ll
+#SBATCH --reservation=training2020
+#SBATCH --time=01:00:00
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=24
+#SBATCH --hint=nomultithread
+
+
+# Download benchmark data
+DATA_SET=water_GMX50_bare
+wget -c ftp://ftp.gromacs.org/pub/benchmarks/${DATA_SET}.tar.gz
+tar xf ${DATA_SET}.tar.gz
+
+# Change to the benchmark directory
+cd ./water-cut1.0_GMX50_bare/1536
+
+srun --mpi=pmi2 -n 48 gmx_mpi mdrun -v -noconfout -nsteps 500 -s topol.tpr

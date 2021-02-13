@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -J python_test
+#SBATCH -p l_long
+#SBATCH --reservation=training2020
+#SBATCH --qos=ll
+#SBATCH --time=00:05:00
+#SBATCH -N 1
+#SBATCH --ntasks-per-node=24
+#SBATCH --hint=nomultithread
+
+# Replace username with your raad2 username in below line
+PYEXEC="/lustre/home/<username>/opt/python/382/py382docker.sif python3"
+
+srun --ntasks=1 singularity exec $PYEXEC linearreg.py

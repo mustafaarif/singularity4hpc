@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH -J mpi_test
+#SBATCH -p l_long
+#SBATCH --qos ll
+#SBATCH --reservation=training2020
+#SBATCH --time=00:05:00
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=24
+#SBATCH --hint=nomultithread
+
+# First compile the source code
+singularity exec mpicc -o pi.out pi.c
+
+#Now launch computation with 48 processes
+srun --mpi=pmi2 -n 48 singularity exec ~/opt/mpich/33/mpich33.sif ./pi.out

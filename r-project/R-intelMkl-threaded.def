@@ -25,7 +25,7 @@ From: ubuntu:latest
    export DEBIAN_FRONTEND=noninteractive
    export R_VERSION=3.6.3
    export R_MAJOR=3
-   export INTEL_ROOT=opt/intel/compilers_and_libraries_2020.1.217/linux
+   export INTEL_ROOT=/opt/intel/compilers_and_libraries_2020.1.217/linux
    export MKLROOT=$INTEL_ROOT/mkl
    export R_INSTALL_PATH=/opt/R
    mkdir -p $R_INSTALL_PATH

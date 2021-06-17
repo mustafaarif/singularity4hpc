@@ -8,5 +8,5 @@ R
 sessionInfo()
 ```
 Useful Link
-- [Quick Linking MKL BLAS/LAPACK to R by Intel] (https://software.intel.com/content/www/us/en/develop/articles/quick-linking-intel-mkl-blas-lapack-to-r.html)
-- [Using Intel MKL with R] (https://software.intel.com/content/www/us/en/develop/articles/using-intel-mkl-with-r.html)
+- [Quick Linking MKL BLAS/LAPACK to R by Intel](https://software.intel.com/content/www/us/en/develop/articles/quick-linking-intel-mkl-blas-lapack-to-r.html)
+- [Using Intel MKL with R](https://software.intel.com/content/www/us/en/develop/articles/using-intel-mkl-with-r.html)

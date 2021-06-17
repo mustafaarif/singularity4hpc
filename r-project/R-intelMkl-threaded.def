@@ -1,5 +1,5 @@
 Bootstrap: docker
-image: ubuntu:latest
+From: ubuntu:latest
 
 %environment
    export DEBIAN_FRONTEND=noninteractive

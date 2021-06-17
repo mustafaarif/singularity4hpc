@@ -2,7 +2,6 @@ https://software.intel.com/content/www/us/en/develop/articles/quick-linking-inte
 
 https://software.intel.com/content/www/us/en/develop/articles/using-intel-mkl-with-r.html
 
-Some information on MKL on Ubuntu system. http://dirk.eddelbuettel.com/blog/2018/04/15/#018_mkl_for_debian_ubuntu </br>
 - For Intel MKL Builds, you should see below
 ```
 R is now configured for x86_64-pc-linux-gnu

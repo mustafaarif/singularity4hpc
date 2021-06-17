@@ -1,3 +1,5 @@
+https://software.intel.com/content/www/us/en/develop/articles/quick-linking-intel-mkl-blas-lapack-to-r.html
+
 https://software.intel.com/content/www/us/en/develop/articles/using-intel-mkl-with-r.html
 
 Some information on MKL on Ubuntu system. http://dirk.eddelbuettel.com/blog/2018/04/15/#018_mkl_for_debian_ubuntu </br>

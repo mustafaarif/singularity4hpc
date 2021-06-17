@@ -26,7 +26,13 @@ From: ubuntu:latest
    export R_VERSION=3.6.3
    export R_MAJOR=3
    export INTEL_ROOT=/opt/intel/compilers_and_libraries_2020.1.217/linux
+   export LD_LIBRARY_PATH=$R_INSTALL_PATH/lib/R/lib:/usr/lib64:$INTEL_ROOT/tbb/lib/intel64_lin/gcc4.7:$INTEL_ROOT/compiler/lib/intel64_lin:$INTEL_ROOT/mkl/lib/intel64_lin:$LD_LIBRARY_PATH
+   export CPATH=$INTEL_ROOT/mkl/include:$CPATH
+   export NLSPATH=$INTEL_ROOT/mkl/lib/intel64_lin/locale/%l_%t/%N:$NLSPATH
+   export LIBRARY_PATH=$INTEL_ROOT/tbb/lib/intel64_lin/gcc4.7:$INTEL_ROOT/compiler/lib/intel64_lin:$INTEL_ROOT/mkl/lib/intel64_lin:$LIBRARY_PATH
    export MKLROOT=$INTEL_ROOT/mkl
+   export PKG_CONFIG_PATH=$INTEL_ROOT/mkl/bin/pkgconfig:$PKG_CONFIG_PATH
+   export MKL_LIB_PATH=$INTEL_ROOT/mkl/lib/intel64
    export R_INSTALL_PATH=/opt/R
    mkdir -p $R_INSTALL_PATH
    apt-get update

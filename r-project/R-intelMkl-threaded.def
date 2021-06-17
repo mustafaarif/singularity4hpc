@@ -42,7 +42,6 @@ From: ubuntu:latest
    MKL="-Wl,--no-as-needed -lmkl_gf_lp64 -Wl,--start-group -lmkl_gnu_thread  -lmkl_core  -Wl,--end-group -fopenmp  -ldl -lpthread -lm"
    ./configure --with-blas="$MKL" --with-lapack --with-x=no
    make -j 2
-   make check
    make install
    ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /usr/lib64/libRlapack.so
    ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /usr/lib64/libRblas.so

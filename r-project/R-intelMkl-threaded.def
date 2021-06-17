@@ -9,6 +9,8 @@ image: ubuntu:latest
    export LIBRARY_PATH=/opt/intel/compilers_and_libraries_2020.1.217/linux/tbb/lib/intel64_lin/gcc4.7:/opt/intel/compilers_and_libraries_2020.1.217/linux/compiler/lib/intel64_lin:/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/lib/intel64_lin:$LIBRARY_PATH
    export MKLROOT=/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl
    export PKG_CONFIG_PATH=/opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/bin/pkgconfig:$PKG_CONFIG_PATH
+   export R_VERSION=3.6.3
+   export R_MAJOR=3
 
 %post
 
@@ -27,17 +29,17 @@ image: ubuntu:latest
    apt-get -y install intel-mkl-64bit-2020.1-102
 
    #Install R
-   wget -O /tmp/R-3.6.3.tar.gz https://cloud.r-project.org/src/base/R-3/R-3.6.3.tar.gz
+   wget -O /tmp/R-${R_VERSION}.tar.gz https://cloud.r-project.org/src/base/R-${R_MAJOR}/R-${R_VERSION}.tar.gz
    cd /tmp
-   tar -xvzf R-3.6.3.tar.gz
-   cd R-3.6.3
+   tar -xvzf R-${R_VERSION}.tar.gz
+   cd R-${R_VERSION}
    source /opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/bin/mklvars.sh intel64
    MKL="-L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -lpthread -lm -ldl"
    ./configure --with-blas="$MKL" --with-lapack --enable-R-shlib --with-x=no
    make -j 2
    make check
    make install
-   rm /tmp/R-3.6.3.tar.gz
+   rm /tmp/R-${R_VERSION}.tar.gz
    rm /tmp/intel-gpg.pub
    rm libmkl_avx512_mic.so
    rm libmkl_vml_avx512_mic.so

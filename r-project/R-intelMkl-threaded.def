@@ -56,10 +56,6 @@ From: ubuntu:latest
    ./configure --prefix=$R_INSTALL_PATH --with-blas="$MKL" --with-lapack --with-x=no
    make -j 2
    make install
-   mv /opt/R/lib/R/lib/libRlapack.so /opt/R/lib/R/lib/libRlapack.so.keep 
-   mv /opt/R/lib/R/lib/libRblas.so /opt/R/lib/R/lib/libRblas.so.keep
-   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /opt/R/lib/R/lib/libRlapack.so
-   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /opt/R/lib/R/lib/libRblas.so
    rm /tmp/R-${R_VERSION}.tar.gz
    rm /tmp/intel-gpg.pub
    rm -rf /tmp/R-${R_VERSION}

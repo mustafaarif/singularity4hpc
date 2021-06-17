@@ -36,7 +36,7 @@ image: ubuntu:latest
    source /opt/intel/compilers_and_libraries_2020.1.217/linux/mkl/bin/mklvars.sh intel64
    MKL="-L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -lpthread -lm -ldl"
    ./configure --with-blas="$MKL" --with-lapack --enable-R-shlib --with-x=no
-   make -j 2
+   make -j 8
    make check
    make install
    rm /tmp/R-${R_VERSION}.tar.gz

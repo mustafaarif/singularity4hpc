@@ -53,7 +53,7 @@ From: ubuntu:latest
    mv /opt/R/lib/R/lib/libRlapack.so /opt/R/lib/R/lib/libRlapack.so.keep 
    mv /opt/R/lib/R/lib/libRblas.so /opt/R/lib/R/lib/libRblas.so.keep
    ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /opt/R/lib/R/lib/libRlapack.so
-   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /opt/R/lib/R/lib/libRlapack.so
+   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /opt/R/lib/R/lib/libRblas.so
    rm /tmp/R-${R_VERSION}.tar.gz
    rm /tmp/intel-gpg.pub
    rm -rf /tmp/R-${R_VERSION}

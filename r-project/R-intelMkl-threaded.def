@@ -4,7 +4,7 @@ From: ubuntu:latest
 %environment
    export DEBIAN_FRONTEND=noninteractive
    export R_INSTALL_PATH=/opt/R
-   export INTEL_ROOT=opt/intel/compilers_and_libraries_2020.1.217/linux
+   export INTEL_ROOT=/opt/intel/compilers_and_libraries_2020.1.217/linux
    export LD_LIBRARY_PATH=$R_INSTALL_PATH/lib:/usr/lib64:$INTEL_ROOT/tbb/lib/intel64_lin/gcc4.7:$INTEL_ROOT/compiler/lib/intel64_lin:$INTEL_ROOT/mkl/lib/intel64_lin:$LD_LIBRARY_PATH
    export CPATH=$INTEL_ROOT/mkl/include:$CPATH
    export NLSPATH=$INTEL_ROOT/mkl/lib/intel64_lin/locale/%l_%t/%N:$NLSPATH
@@ -50,8 +50,10 @@ From: ubuntu:latest
    ./configure --prefix=$R_INSTALL_PATH --with-blas="$MKL" --with-lapack --with-x=no
    make -j 2
    make install
-   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /usr/lib64/libRlapack.so
-   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /usr/lib64/libRblas.so
+   mv /opt/R/lib/R/libRlapack.so /opt/R/lib/R/libRlapack.so.keep 
+   mv /opt/R/lib/R/libRblas.so /opt/R/lib/R/libRblas.so.keep
+   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /opt/R/lib/R/libRlapack.so
+   ln -s ${MKLROOT}/lib/intel64/libmkl_rt.so /opt/R/lib/R/libRlapack.so
    rm /tmp/R-${R_VERSION}.tar.gz
    rm /tmp/intel-gpg.pub
    rm -rf /tmp/R-${R_VERSION}

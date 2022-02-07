@@ -46,6 +46,8 @@ Singularity> ./configure
 Singularity> make -j 4
 
 Singularity> make install
+
+Singularity> apt-get clean
 ```
 
 # Step 03

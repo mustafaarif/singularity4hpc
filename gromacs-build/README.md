@@ -92,7 +92,7 @@ Gromacs supplies a bash script which should be exectued before launching Gromacs
 However when you are running singularity on raad2 on multi-node it is not possible to interactively set environment variables. Therefore we need to identify which variables are required and set them in container in advance. This approach applies to various other packages which supply scripts to setup environment.
 
 ```sh
-Singularity> cd /.singularity.d/
+Singularity> cd /.singularity.d/env
 Singularity> touch 99-gromacs2020.sh
 # Open '99-gromacs2020.sh' via nano or vim editor and paste below variables;
 LD_LIBRARY_PATH=/usr/local/gromacs/lib:$LD_LIBRARY_PATH

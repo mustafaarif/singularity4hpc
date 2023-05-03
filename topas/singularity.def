@@ -1,0 +1,28 @@
+Bootstrap: docker
+From: debian:10
+
+%environment
+    export LC_ALL=C
+    export TOPAS_G4_DATA_DIR=/G4Data
+    export TOPAS_DIR=/topas
+    export PATH=/topas/bin:$PATH
+    export LD_LIBRARY_PATH=/topas/lib:$LD_LIBRARY_PATH
+
+%files
+    ./setupFiles/topas_3_7_debian9.tar.gz /tmp
+    ./setupFiles/geant4Data.sh /tmp
+%runscript
+    exec "$@"
+
+%labels
+    Author mustafa.arif@qatar.tamu.edu
+    Version v0.0.1
+    TopasVersion 3.7
+
+%post
+    apt update -y
+        apt install -y libexpat1-dev libgl1-mesa-dev libglu1-mesa-dev libxt-dev xorg-dev build-essential libharfbuzz-dev
+    mkdir -p /topas && tar -xvzf /tmp/topas_3_7_centos8.tar.gz
+    mkdir -p /G4Data && cd /G4Data && /tmp/geant4Data.sh
+    rm /tmp/topas_3_7_debian.tar.gz
+    rm /tmp/geant4Data.sh

@@ -1,0 +1,22 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%environment
+    export LC_ALL=C
+    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+%runscript
+    exec "$@"
+
+%labels
+    Author arif@ebi.ac.uk
+    Version v0.0.1
+    CytoscapeVersion 3.10.0
+
+%post
+    apt-get -y update
+    apt-get -y install openjdk-17-jdk openjdk-17-jre wget ocl-icd-opencl-dev
+    wget https://github.com/cytoscape/cytoscape/releases/download/3.10.1/Cytoscape_3_10_1_unix.sh -O /tmp/Cytoscape_3_10_1_unix.sh
+    chmod +x /tmp/Cytoscape_3_10_1_unix.sh
+    /tmp/Cytoscape_3_10_1_unix.sh -q
+    rm /tmp/Cytoscape_3_10_1_unix.sh

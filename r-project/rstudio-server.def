@@ -1,0 +1,31 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%environment
+   export DEBIAN_FRONTEND=noninteractive
+   export PATH=/usr/lib/rstudio-server/bin:$PATH
+   export RSTUDIO_SERVER_VERSION=2023.06.2-561-amd64
+
+%runscript
+   exec rserver "$@"
+
+%post
+   #Install development packages
+   export DEBIAN_FRONTEND=noninteractive
+   export RSTUDIO_SERVER_VERSION=2023.06.2-561-amd64
+   apt-get update
+   apt-get -y install wget build-essential ca-certificates gfortran libreadline-dev \                                                                           
+   libcurl4-openssl-dev liblzma-dev libbz2-dev libpcre3 libpcre3-dev tzdata locales-all zlib1g-dev xorg-dev libx11-dev libcurl4-openssl-dev                     
+   ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
+   dpkg-reconfigure --frontend noninteractive tzdata
+
+   #Install Build Dependencies
+   sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list
+   apt update
+   apt -y build-dep r-base
+
+   #Install RStudio Server
+   apt -y install gdebi-core
+   wget -O /tmp/rstudio-server-${RSTUDIO_SERVER_VERSION}.deb https://download2.rstudio.org/server/jammy/amd64/rstudio-server-${RSTUDIO_SERVER_VERSION}.deb      
+   cd /tmp
+   gdebi -n rstudio-server-${RSTUDIO_SERVER_VERSION}.deb

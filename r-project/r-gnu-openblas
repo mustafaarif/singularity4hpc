@@ -1,0 +1,45 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%environment
+   export DEBIAN_FRONTEND=noninteractive
+   export R_VERSION=4.2.2
+   export R_MAJOR=4
+   export R_INSTALL_PATH=/opt/R/$R_VERSION
+   export PATH=$R_INSTALL_PATH/bin:$PATH
+%post
+   #Install development packages
+   export DEBIAN_FRONTEND=noninteractive
+   export R_VERSION=4.2.2
+   export R_MAJOR=4
+   export LD_LIBRARY_PATH=$R_INSTALL_PATH/lib/R/lib:/usr/lib64:$LD_LIBRARY_PATH
+   export R_INSTALL_PATH=/opt/R/$R_VERSION
+   mkdir -p $R_INSTALL_PATH
+   apt-get update
+   apt-get -y install wget build-essential ca-certificates gfortran libreadline-dev \
+   libcurl4-openssl-dev liblzma-dev libbz2-dev libpcre3 libpcre3-dev tzdata locales-all zlib1g-dev xorg-dev libx11-dev libcurl4-openssl-dev
+   ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
+   dpkg-reconfigure --frontend noninteractive tzdata
+
+   #Install Build Dependencies
+   sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list
+   apt update
+   apt -y build-dep r-base
+
+   # OpenBLas Library
+   apt -y install libopenblas-dev
+   update-alternatives --config libblas.so.3-$(arch)-linux-gnu
+
+   #Install R
+   wget -O /tmp/R-${R_VERSION}.tar.gz https://cloud.r-project.org/src/base/R-${R_MAJOR}/R-${R_VERSION}.tar.gz
+   cd /tmp
+   tar -xvzf R-${R_VERSION}.tar.gz
+   cd R-${R_VERSION}
+   ./configure --prefix=$R_INSTALL_PATH --enable-R-shlib --enable-memory-profiling --with-blas --with-lapack --with-x=yes
+   make -j 6
+   make install
+   rm /tmp/R-${R_VERSION}.tar.gz
+   rm -rf /tmp/R-${R_VERSION}
+   ln -s $R_INSTALL_PATH/bin/R /usr/local/bin/R
+   ln -s $R_INSTALL_PATH/bin/Rscript /usr/local/bin/Rscript
+   Rscript -e 'install.packages("ggplot2", repos="https://cloud.r-project.org")'

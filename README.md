@@ -2,7 +2,7 @@
 
 ## Usage
 
-(Install Singularity or Apptainer)[https://docs.sylabs.io/guides/latest/user-guide/quick_start.html]
+[Install Singularity or Apptainer](https://docs.sylabs.io/guides/latest/user-guide/quick_start.html)
 
 ```bash
 git clone https://github.com/mustafaarif/singularity4hpc

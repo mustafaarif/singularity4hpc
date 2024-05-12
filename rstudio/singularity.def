@@ -1,0 +1,26 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%environment
+    export DEBIAN_FRONTEND=noninteractive
+    export LC_ALL=C
+
+%runscript
+    exec "$@"
+
+%labels
+    Author arif@ebi.ac.uk
+    Version v0.0.1
+    RstudioVersion 2023.06.2
+
+%post
+    apt-get -y update
+    ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
+    apt -y install tzdata wget libnss3 libasound-dev libgbm-dev
+    dpkg-reconfigure --frontend noninteractive tzdata
+    apt -y install r-base
+    cd /tmp
+    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.06.2-561-amd64.deb
+    apt -y install -f /tmp/rstudio-2023.06.2-561-amd64.deb
+    rm /tmp/rstudio-2023.06.2-561-amd64.deb
+    Rscript -e 'install.packages("renv",repos="https://cloud.r-project.org")'

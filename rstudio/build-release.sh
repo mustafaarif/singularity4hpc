@@ -6,6 +6,8 @@ R_VERSION=$1
 R_MAJOR=$2
 RSTUDIO_VERSION=2024.04.0-735-amd64
 
+mkdir -p logs buildfiles output
+
 cp ./template/rstudio-build.def ./buildfiles/rstudio-build-$R_VERSION.def
 
 sed -i "s/R_VERSION=.*/R_VERSION=$R_VERSION/" ./buildfiles/rstudio-build-$R_VERSION.def

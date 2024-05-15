@@ -1,0 +1,25 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%environment
+    export DEBIAN_FRONTEND=noninteractive
+    export LC_ALL=C
+
+%runscript
+    exec /usr/local/bin/vmd
+
+%post
+    apt -y update
+    ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
+    apt -y install tzdata
+    dpkg-reconfigure --frontend noninteractive tzdata
+    apt -y install libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libgtk-3-dev libgl1-mesa-glx libxi6 libgconf-2-4 wget build-essential cmake
+    cd /opt
+    wget https://www.ks.uiuc.edu/Research/vmd/vmd-1.9.3/files/final/vmd-1.9.3.bin.LINUXAMD64-CUDA8-OptiX4-OSPRay111p1.opengl.tar.gz
+    tar -xvzf vmd-1.9.3.bin.LINUXAMD64-CUDA8-OptiX4-OSPRay111p1.opengl.tar.gz
+    mv vmd-1.9.3 vmd-1.9.3-src
+    cd vmd-1.9.3-src
+    ./configure
+    cd src
+    make install
+    rm /opt/vmd-1.9.3.bin.LINUXAMD64-CUDA8-OptiX4-OSPRay111p1.opengl.tar.gz

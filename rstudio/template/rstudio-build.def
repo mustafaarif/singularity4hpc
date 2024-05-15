@@ -22,7 +22,7 @@ From: ubuntu:22.04
    export R_INSTALL_PATH=/opt/R/$R_VERSION
    mkdir -p $R_INSTALL_PATH
    apt-get update
-   apt-get -y install wget cmake build-essential ca-certificates gfortran libreadline-dev \
+   apt-get -y install wget cmake libatk1.0-0 libatk-bridge2.0-0 libgtk-3-dev build-essential ca-certificates gfortran libreadline-dev \
    libcurl4-openssl-dev liblzma-dev libbz2-dev libpcre3 libpcre3-dev libxml2 libxml2-dev tzdata locales-all zlib1g-dev xorg-dev libx11-dev libcurl4-openssl-dev
    ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
    dpkg-reconfigure --frontend noninteractive tzdata
